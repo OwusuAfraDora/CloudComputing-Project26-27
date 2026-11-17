@@ -1,0 +1,23 @@
+service:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto-data:/mosquitto/data
+    restart: unless-stopped
+
+  nodered:
+    image: nodered/node-red:latest
+    ports:
+      - "1880:1880"
+    volumes:
+      - nodered-data:/data
+    depends_on:
+      - mosquitto
+    restart: unless-stopped
+
+volumes:
+  nodered-data:
+  mosquitto-data:
