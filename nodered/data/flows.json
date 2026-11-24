@@ -1,0 +1,425 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "d85aaeedd14406cc",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "TestJoystick",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"X\":5,\"Y\":-15}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "17d8b1dcbc0c6ff3",
+                "9ddc35fc79138719"
+            ]
+        ]
+    },
+    {
+        "id": "10ccd466348ddf52",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "TestButtons",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"A\":1,\"B\":1}",
+        "payloadType": "json",
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "d57b5b99b68b526a",
+                "50319a60165a4f9f"
+            ]
+        ]
+    },
+    {
+        "id": "ee7728104d9d4233",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"A\":false}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "5207b801cd237a6d"
+            ]
+        ]
+    },
+    {
+        "id": "5207b801cd237a6d",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d57b5b99b68b526a",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload.A",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "cont",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 400,
+        "wires": [
+            [
+                "ee7728104d9d4233"
+            ],
+            [
+                "8242f9a9d3d505cd"
+            ]
+        ]
+    },
+    {
+        "id": "8242f9a9d3d505cd",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"A\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 420,
+        "wires": [
+            [
+                "5207b801cd237a6d"
+            ]
+        ]
+    },
+    {
+        "id": "1b7932834f045f68",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"B\":false}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 500,
+        "wires": [
+            [
+                "5207b801cd237a6d"
+            ]
+        ]
+    },
+    {
+        "id": "50319a60165a4f9f",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload.B",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "cont",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 520,
+        "wires": [
+            [
+                "1b7932834f045f68"
+            ],
+            [
+                "33b4d1295b08fc43"
+            ]
+        ]
+    },
+    {
+        "id": "33b4d1295b08fc43",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"B\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 540,
+        "wires": [
+            [
+                "5207b801cd237a6d"
+            ]
+        ]
+    },
+    {
+        "id": "8ca1354837cf31bd",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"X\":\"X out of normal range\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 200,
+        "wires": [
+            [
+                "5207b801cd237a6d"
+            ]
+        ]
+    },
+    {
+        "id": "17d8b1dcbc0c6ff3",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload.X",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "-10",
+                "vt": "num"
+            },
+            {
+                "t": "gt",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "8ca1354837cf31bd"
+            ],
+            [
+                "8ca1354837cf31bd"
+            ]
+        ]
+    },
+    {
+        "id": "83d8b43e73b6f325",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"Y\":\"Y out of normal range\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "5207b801cd237a6d"
+            ]
+        ]
+    },
+    {
+        "id": "9ddc35fc79138719",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "property": "payload.Y",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lt",
+                "v": "-10",
+                "vt": "num"
+            },
+            {
+                "t": "gt",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "83d8b43e73b6f325"
+            ],
+            [
+                "83d8b43e73b6f325"
+            ]
+        ]
+    },
+    {
+        "id": "e82edb53ac554b2c",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "Joystickdata",
+        "topic": "jostick",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 320,
+        "wires": [
+            [
+                "17d8b1dcbc0c6ff3",
+                "9ddc35fc79138719"
+            ]
+        ]
+    },
+    {
+        "id": "a508827a7c3c82b7",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "Buttonsdata",
+        "topic": "buttons",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 540,
+        "wires": [
+            [
+                "d57b5b99b68b526a",
+                "50319a60165a4f9f"
+            ]
+        ]
+    }
+]
