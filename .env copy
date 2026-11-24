@@ -1,0 +1,5 @@
+INFLUX_USER=admin
+INFLUX_PASSWORD=change-me-please
+INFLUX_ORG=myorg
+INFLUX_BUCKET=controller
+INFLUX_TOKEN=a-long-random-token-string

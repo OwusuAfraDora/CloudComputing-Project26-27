@@ -1,0 +1,5 @@
+.env
+nodered/data/node_modules/
+nodered/data/.npm/
+nodered/data/flows_cred.json
+nodered/data/.config.*.json
